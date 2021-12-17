@@ -14,6 +14,7 @@ class BeeHoney extends FlameGame with KeyboardEvents {
   Bg bg = Bg();
   Bg bg2 = Bg();
   Bee bee = Bee();
+  Spider spider = Spider();
 
   @override
   Future<void>? onLoad() async {
@@ -40,6 +41,15 @@ class BeeHoney extends FlameGame with KeyboardEvents {
       ..anchor = Anchor.center;
 
     add(bee);
+
+    spider
+      ..sprite = await Sprite.load("spider1.png")
+      ..size = Vector2.all(80)
+      ..position = Vector2(250, 500)
+      ..anchor = Anchor.center;
+
+    add(spider);
+
     return super.onLoad();
   }
 
@@ -47,8 +57,12 @@ class BeeHoney extends FlameGame with KeyboardEvents {
   void update(double dt) {
     bg.move(dt, 100, 900, 0);
     bg2.move(dt, 100, 0, -900);
+
     bee.move(dt, 10);
     bee.animation(8, 4, "bee");
+
+    spider.animation(8, 4, "spider");
+    spider.move(dt, bee);
     super.update(dt);
   }
 
@@ -112,6 +126,22 @@ class Bee extends Obj {
       if (x >= 25) {
         x -= speed;
       }
+    }
+  }
+}
+
+class Spider extends Obj {
+  move(dt, bee) {
+    y += 80 * dt;
+    if (y > 950) {
+      y = -50;
+    }
+
+    if (x < bee.x) {
+      x += 2;
+    }
+    if (x > bee.x) {
+      x -= 2;
     }
   }
 }
