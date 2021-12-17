@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flame/components.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
@@ -73,7 +75,7 @@ class BeeHoney extends FlameGame with KeyboardEvents {
     spider.animation(8, 4, "spider");
     spider.move(dt, bee);
 
-    flower.move(dt, 110);
+    flower.move(dt, 200);
     flower.animation(8, 2, "florwer");
     super.update(dt);
   }
@@ -111,6 +113,11 @@ class Obj extends SpriteComponent {
       img = 1;
     }
     sprite = await Sprite.load("$name$img.png");
+  }
+
+  random(min, max) {
+    var r = Random();
+    return min + r.nextInt(max - min);
   }
 }
 
@@ -161,5 +168,10 @@ class Spider extends Obj {
 class Flower extends Obj {
   move(dt, speed) {
     y += speed * dt;
+
+    if (y > 950) {
+      y = -50;
+      x = random(50, 500);
+    }
   }
 }
