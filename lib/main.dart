@@ -1,4 +1,4 @@
-import 'package:beehoney_game/screens/main_screen/main_screen.dart';
+import 'package:beehoney_game/app/screens/main_screen/main_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
