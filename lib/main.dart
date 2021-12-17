@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flame/components.dart';
 import 'package:flame/game.dart';
+import 'package:flame/geometry.dart';
 import 'package:flame/input.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/services.dart';
@@ -12,7 +13,7 @@ void main() {
   );
 }
 
-class BeeHoney extends FlameGame with KeyboardEvents {
+class BeeHoney extends FlameGame with KeyboardEvents, HasCollidables {
   Bg bg = Bg();
   Bg bg2 = Bg();
   Bee bee = Bee();
@@ -41,7 +42,8 @@ class BeeHoney extends FlameGame with KeyboardEvents {
       ..sprite = await Sprite.load("bee1.png")
       ..size = Vector2.all(50)
       ..position = Vector2(250, 800)
-      ..anchor = Anchor.center;
+      ..anchor = Anchor.center
+      ..addHitbox(HitboxRectangle());
 
     add(bee);
 
@@ -49,7 +51,8 @@ class BeeHoney extends FlameGame with KeyboardEvents {
       ..sprite = await Sprite.load("spider1.png")
       ..size = Vector2.all(80)
       ..position = Vector2(250, 500)
-      ..anchor = Anchor.center;
+      ..anchor = Anchor.center
+      ..addHitbox(HitboxRectangle());
 
     add(spider);
 
@@ -57,7 +60,8 @@ class BeeHoney extends FlameGame with KeyboardEvents {
       ..sprite = await Sprite.load("florwer1.png")
       ..size = Vector2.all(30)
       ..position = Vector2(200, 400)
-      ..anchor = Anchor.center;
+      ..anchor = Anchor.center
+      ..addHitbox(HitboxRectangle());
 
     add(flower);
 
@@ -97,7 +101,7 @@ class BeeHoney extends FlameGame with KeyboardEvents {
   }
 }
 
-class Obj extends SpriteComponent {
+class Obj extends SpriteComponent with HasHitboxes, Collidable {
   int timer = 0;
   int img = 1;
   String name = "";
@@ -145,6 +149,18 @@ class Bee extends Obj {
       if (x >= 25) {
         x -= speed;
       }
+    }
+  }
+
+  @override
+  void onCollision(Set<Vector2> intersectionPoints, Collidable other) {
+    super.onCollision(intersectionPoints, other);
+
+    if (other is Spider) {
+      other.position.y = -100;
+    }
+    if (other is Flower) {
+      other.position.y = -100;
     }
   }
 }
