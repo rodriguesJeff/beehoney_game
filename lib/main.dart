@@ -1,9 +1,19 @@
-import 'package:beehoney_game/game/beehoney.dart';
-import 'package:flame/game.dart';
+import 'package:beehoney_game/screens/main_screen/main_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
   runApp(
-    GameWidget(game: BeeHoney()),
+    const Main(),
   );
+}
+
+class Main extends StatelessWidget {
+  const Main({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      home: MainScreen(),
+    );
+  }
 }
