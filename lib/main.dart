@@ -161,6 +161,7 @@ class Bee extends Obj {
     }
     if (other is Flower) {
       other.position.y = -100;
+      other.position.x = random(50, 500);
     }
   }
 }
