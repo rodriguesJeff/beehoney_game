@@ -1,3 +1,4 @@
+import 'package:beehoney_game/game/utils/utils.dart';
 import 'package:beehoney_game/objs/flower.dart';
 import 'package:beehoney_game/objs/obj.dart';
 import 'package:beehoney_game/objs/spider.dart';
@@ -26,10 +27,12 @@ class Bee extends Obj {
 
     if (other is Spider) {
       other.position.y = -100;
+      lifes--;
     }
     if (other is Flower) {
       other.position.y = -100;
       other.position.x = random(50, 500);
+      score++;
     }
   }
 }

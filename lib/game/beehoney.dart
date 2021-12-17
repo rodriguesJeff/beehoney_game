@@ -1,11 +1,15 @@
+import 'package:beehoney_game/game/utils/utils.dart';
 import 'package:beehoney_game/objs/bee.dart';
 import 'package:beehoney_game/objs/bg.dart';
 import 'package:beehoney_game/objs/flower.dart';
 import 'package:beehoney_game/objs/spider.dart';
+import 'package:beehoney_game/objs/text.dart';
 import 'package:flame/components.dart';
 import 'package:flame/game.dart';
 import 'package:flame/geometry.dart';
 import 'package:flame/input.dart';
+import 'package:flame/palette.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
@@ -15,6 +19,10 @@ class BeeHoney extends FlameGame with KeyboardEvents, HasCollidables {
   Bee bee = Bee();
   Spider spider = Spider();
   Flower flower = Flower();
+
+  GameText textScore = GameText("Score: ", 10, 10, BasicPalette.black.color);
+
+  GameText textLifes = GameText("Lifes: ", 400, 10, BasicPalette.black.color);
 
   @override
   Future<void>? onLoad() async {
@@ -61,6 +69,9 @@ class BeeHoney extends FlameGame with KeyboardEvents, HasCollidables {
 
     add(flower);
 
+    add(textScore);
+    add(textLifes);
+
     return super.onLoad();
   }
 
@@ -77,6 +88,10 @@ class BeeHoney extends FlameGame with KeyboardEvents, HasCollidables {
 
     flower.move(dt, 200);
     flower.animation(8, 2, "florwer");
+
+    textScore.text = "$textPts $score";
+
+    textLifes.text = "$textL $lifes";
     super.update(dt);
   }
 
